@@ -72,32 +72,38 @@
   { nama: "ZULKEFLI BIN IBERAHIM", kp: "031026140901", graduan: "AMIR AFIQ BIN AMIR AZIZI", hp: "0122083030", email: "amirafiqamirazizi03@gmail.com", status: "BELUM RESPOND" }
 ];
         
-        function showDetails(index) {
-            const mentor = mentors[index];
-            document.getElementById("details").innerHTML = `
-                <h3>Maklumat Mentor</h3>
-                <p><strong>Nama Mentor:</strong> ${mentor.nama}</p>
-                <p><strong>Nama Graduan:</strong> ${mentor.graduan}</p>
-                <p><strong>No KP Graduan:</strong> ${mentor.kp}</p>
-                <p><strong>No HP:</strong> <a href="https://wa.me/6${mentor.hp}" target="_blank">${mentor.hp}</a></p>
-                <p><strong>Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
-                <p><strong>Status:</strong> ${mentor.status}</p>
-            `;
+        function showDetails() {
+            const index = document.getElementById("mentor-select").value;
+            if (index !== "") {
+                const mentor = mentors[index];
+                document.getElementById("details").innerHTML = `
+                    <h3>Maklumat Mentor</h3>
+                    <p><strong>Nama Mentor:</strong> ${mentor.nama}</p>
+                    <p><strong>Nama Graduan:</strong> ${mentor.graduan}</p>
+                    <p><strong>No KP Graduan:</strong> ${mentor.kp}</p>
+                    <p><strong>No HP:</strong> <a href="https://wa.me/6${mentor.hp}" target="_blank">${mentor.hp}</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
+                    <p><strong>Status:</strong> ${mentor.status}</p>
+                `;
+            }
         }
     </script>
 </head>
 <body>
     <h2>Senarai Mentor</h2>
-    <ul id="mentor-list">
-    </ul>
+    <label for="mentor-select">Pilih Mentor:</label>
+    <select id="mentor-select" onchange="showDetails()">
+        <option value="">-- Pilih Mentor --</option>
+    </select>
     <div id="details"></div>
 
     <script>
-        const mentorList = document.getElementById("mentor-list");
+        const mentorSelect = document.getElementById("mentor-select");
         mentors.forEach((mentor, index) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="#" onclick="showDetails(${index})">${mentor.nama}</a>`;
-            mentorList.appendChild(li);
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = mentor.nama;
+            mentorSelect.appendChild(option);
         });
     </script>
 </body>
