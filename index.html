@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Senarai Mentor</title>
+    <script>
+        const mentors = [
+            { nama: "AFIDAH BINTI ABDUL MALEK", kp: "030505021075", graduan: "MUHAMMAD AMIRUL BIN ZAMZURIN", hp: "0189446281", email: "zamzurinamirul@gmail.com", status: "BELUM RESPOND" },
+            { nama: "AHMAD WALID BIN MD YUSUF", kp: "030124140935", graduan: "MUHAMMAD ASRUL BIN ABDULLAH", hp: "0135734193", email: "muhddaasrul@gmail.com", status: "BELUM RESPOND" },
+            { nama: "AMIRUL BIN ISMAIL", kp: "020319090035", graduan: "MUHAMMAD SHAHRIZAT BIN HAZIR", hp: "01136204348", email: "muhamadshahrizat1@gmail.com", status: "BELUM RESPOND" },
+            { nama: "AZNIZA BINTI ZAINUL", kp: "030606080031", graduan: "AIMAN HAKIM BIN ABU BAKAR", hp: "0135606742", email: "ah1178737@gmail.com", status: "BELUM RESPOND" },
+            { nama: "AZRISHAM BIN ABD.RAHMAN", kp: "031214100843", graduan: "MUHAMMAD AMIRUL FARIS BIN JAMBARI", hp: "0198852114", email: "amirulfaris4603@gmail.com.my", status: "BELUM RESPOND" },
+            { nama: "ERNIZA BINTI ZAILAN", kp: "020319020395", graduan: "MUHAMMAD FIRDAUS BIN ZULKIPLI", hp: "01170036643", email: "firdauszulkipli42@gmail.com", status: "BELUM RESPOND" },
+            { nama: "FARIDA BINTI OTHMAN", kp: "030607070759", graduan: "ZULFAHMI SHARQAWI BIN ZAKARIA", hp: "01123074358", email: "sharqawizulfahmi@gmail.com", status: "BELUM RESPOND" },
+            { nama: "FARIZA BINTI ISHAK", kp: "030122030089", graduan: "MOHAMAD SYAZNI BIN MOHD KHATIB", hp: "0184048779", email: "mohamadsyazni10@gmail.com", status: "BELUM RESPOND" },
+            { nama: "FASIHAH BINTI ARSHAD", kp: "010716021448", graduan: "NUR AZIRAH CEMPAKA BINTI ABD AZIZ", hp: "01169717303", email: "azairahaziz167@gmail.com", status: "BELUM RESPOND" },
+            { nama: "FATIN ANTASHA BINTI ANIZAM", kp: "011104010363", graduan: "MUHAMAD HAIKAL BIN AHMAD SHAFIE", hp: "0149684299", email: "haikaleykal07@gmail.com", status: "BELUM RESPOND" }
+        ];
+        
+        function showDetails(index) {
+            const mentor = mentors[index];
+            document.getElementById("details").innerHTML = `
+                <h3>Maklumat Mentor</h3>
+                <p><strong>Nama Mentor:</strong> ${mentor.nama}</p>
+                <p><strong>Nama Graduan:</strong> ${mentor.graduan}</p>
+                <p><strong>No KP Graduan:</strong> ${mentor.kp}</p>
+                <p><strong>No HP:</strong> <a href="https://wa.me/6${mentor.hp}" target="_blank">${mentor.hp}</a></p>
+                <p><strong>Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
+                <p><strong>Status:</strong> ${mentor.status}</p>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h2>Senarai Mentor</h2>
+    <ul id="mentor-list">
+    </ul>
+    <div id="details"></div>
+
+    <script>
+        const mentorList = document.getElementById("mentor-list");
+        mentors.forEach((mentor, index) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="#" onclick="showDetails(${index})">${mentor.nama}</a>`;
+            mentorList.appendChild(li);
+        });
+    </script>
+</body>
+</html>
