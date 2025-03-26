@@ -123,33 +123,76 @@
     { nama: "ZULKEFLI BIN IBERAHIM", kp: "031026140901", graduan: "AMIR AFIQ BIN AMIR AZIZI", hp: "0122083030", email: "amirafiqamirazizi@gmail.com", status: "BELUM RESPOND" }
 ];
         
-        function showDetails(index) {
+        function showDetails() {
+            const select = document.getElementById("mentor-select");
+            const index = select.selectedIndex - 1;
+            const detailsDiv = document.getElementById("details");
+
+            if (index < 0) {
+                detailsDiv.innerHTML = '<p>Sila pilih mentor</p>';
+                return;
+            }
+
             const mentor = mentors[index];
-            document.getElementById("details").innerHTML = `
-                <h3>Maklumat Mentor</h3>
-                <p><strong>Nama Mentor:</strong> ${mentor.nama}</p>
-                <p><strong>Nama Graduan:</strong> ${mentor.graduan}</p>
-                <p><strong>No KP Graduan:</strong> ${mentor.kp}</p>
-                <p><strong>No HP:</strong> <a href="https://wa.me/6${mentor.hp}" target="_blank">${mentor.hp}</a></p>
-                <p><strong>Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
-                <p><strong>Status:</strong> ${mentor.status}</p>
-            `;
+            
+            // Handle mentors with multiple students
+            if (mentor.students) {
+                let studentsHTML = mentor.students.map(student => `
+                    <div>
+                        <h4>Graduan ${student.graduan}</h4>
+                        <p><strong>No KP Graduan:</strong> ${student.kp}</p>
+                        <p><strong>No HP:</strong> <a href="https://wa.me/6${student.hp}" target="_blank">${student.hp}</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:${student.email}">${student.email}</a></p>
+                        <p><strong>Status:</strong> ${student.status}</p>
+                    </div>
+                `).join('<hr>');
+
+                detailsDiv.innerHTML = `
+                    <h3>Maklumat Mentor</h3>
+                    <p><strong>Nama Mentor:</strong> ${mentor.nama}</p>
+                    ${studentsHTML}
+                `;
+            } else {
+                // Handle mentors with single student
+                detailsDiv.innerHTML = `
+                    <h3>Maklumat Mentor</h3>
+                    <p><strong>Nama Mentor:</strong> ${mentor.nama}</p>
+                    <p><strong>Nama Graduan:</strong> ${mentor.graduan}</p>
+                    <p><strong>No KP Graduan:</strong> ${mentor.kp}</p>
+                    <p><strong>No HP:</strong> <a href="https://wa.me/6${mentor.hp}" target="_blank">${mentor.hp}</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:${mentor.email}">${mentor.email}</a></p>
+                    <p><strong>Status:</strong> ${mentor.status}</p>
+                `;
+            }
+        }
+
+        // Initialize the dropdown when the page loads
+        window.onload = function() {
+            const select = document.getElementById("mentor-select");
+            
+            // Add default option
+            const defaultOption = document.createElement("option");
+            defaultOption.text = "Pilih Mentor";
+            defaultOption.value = "";
+            select.add(defaultOption);
+
+            // Populate dropdown with mentor names
+            mentors.forEach((mentor, index) => {
+                const option = document.createElement("option");
+                option.text = mentor.nama;
+                option.value = index;
+                select.add(option);
+            });
         }
     </script>
 </head>
 <body>
     <h2>Senarai Mentor</h2>
-    <ul id="mentor-list">
-    </ul>
-    <div id="details"></div>
-
-    <script>
-        const mentorList = document.getElementById("mentor-list");
-        mentors.forEach((mentor, index) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="#" onclick="showDetails(${index})">${mentor.nama}</a>`;
-            mentorList.appendChild(li);
-        });
-    </script>
+    <select id="mentor-select" onchange="showDetails()">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+    <div id="details">
+        <p>Sila pilih mentor</p>
+    </div>
 </body>
 </html>
